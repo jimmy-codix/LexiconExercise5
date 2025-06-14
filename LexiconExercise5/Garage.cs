@@ -1,11 +1,14 @@
 ﻿using LexiconExercise5.Interfaces;
+using LexiconExercise5.Vehicles;
 using System.Collections;
+using System.Reflection.Metadata.Ecma335;
 
 namespace LexiconExercise5
 {
     internal class Garage<T> : IGarage<T>, IEnumerable<T> where T : class
     {
         private T[] _items;
+        private int currIndex = 0;
         public int Count { get; private set; }
         public T this[int index]
         {
@@ -33,7 +36,8 @@ namespace LexiconExercise5
         {
             for (int i = 0; i < Count; i++)
             {
-                yield return _items[i];
+                if (_items[i] != null)
+                    yield return _items[i];
             }
         }
 
@@ -41,5 +45,26 @@ namespace LexiconExercise5
         {
             return GetEnumerator();
         }
+
+        public void Departing(Vehicle vehicle)
+        {
+            ArgumentNullException.ThrowIfNull(vehicle, nameof(vehicle));
+        }
+
+        public void Park(Vehicle vehicle)
+        {
+            ArgumentNullException.ThrowIfNull(vehicle, nameof(vehicle));
+
+            //Todo: Check this
+            if (CanVehicleFit(vehicle))
+            {
+                _items[currIndex] = (T)(object)vehicle;
+                currIndex++;
+                Count -= vehicle.UnitSize;
+            }
+
+        }
+
+        private bool CanVehicleFit(Vehicle vehicle) => vehicle.UnitSize < Count;
     }
 }
