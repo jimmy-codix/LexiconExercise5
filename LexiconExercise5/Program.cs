@@ -1,4 +1,5 @@
 ﻿using LexiconExercise5.Vehicles;
+using LexiconExercise5.Interfaces;
 
 namespace LexiconExercise5
 {
@@ -9,8 +10,16 @@ namespace LexiconExercise5
             var mgr = new Manager();
             var ui = new UI();
             var handler = new Handler();
-            var garager = new Garage();
-            //var vehicle = new Vehicle();
+            IGarage<Vehicle> grg = new Garage<Vehicle>(10);
+            int a = grg.Count;
+            Console.WriteLine(a.ToString());
+            Vehicle bt = new Boat();
+            grg.Park(bt);
+            foreach (var item in grg)
+            {
+                Console.WriteLine($"Nummer {item.UnitSize}");
+            }
+            Console.WriteLine(grg.Count.ToString());
         }
     }
 }
