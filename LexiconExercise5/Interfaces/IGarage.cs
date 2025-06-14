@@ -1,4 +1,6 @@
-﻿namespace LexiconExercise5.Interfaces
+﻿using LexiconExercise5.Vehicles;
+
+namespace LexiconExercise5.Interfaces
 {
     internal interface IGarage<T> where T : class
     {
@@ -7,5 +9,9 @@
         int Count { get; }
 
         IEnumerator<T> GetEnumerator();
+
+        void Departing(Vehicle vehicle);
+
+        void Park(Vehicle vehicle);
     }
 }
