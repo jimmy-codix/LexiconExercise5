@@ -2,8 +2,7 @@
 {
     internal abstract class Vehicle
     {
-        public Vehicle()
-        {
-        }
+        protected int UnitSize { get; set; } = 1;
+
     }
 }
