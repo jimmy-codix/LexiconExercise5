@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace LexiconExercise5.Vehicles
 {
-    internal class Boat : Vehicle
+    internal class Car : Vehicle
     {
-        public Boat() => UnitSize = 3;
+        public Car() => UnitSize = 1;
     }
 }

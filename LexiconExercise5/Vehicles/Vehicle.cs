@@ -2,7 +2,8 @@
 {
     internal abstract class Vehicle
     {
-        protected int UnitSize { get; set; } = 1;
+        //TODO may be readonly?
+        public int UnitSize { get; protected set; } = 1;
 
     }
 }
