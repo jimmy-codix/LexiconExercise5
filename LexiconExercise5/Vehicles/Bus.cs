@@ -8,6 +8,10 @@ namespace LexiconExercise5.Vehicles
 {
     internal class Bus : Vehicle
     {
-        public Bus(int unitSize) : base(unitSize) { }
+        public bool HasToilet { get; private set; }
+        public Bus(int unitSize, bool hasToilet) : base(unitSize) 
+        { 
+            HasToilet = hasToilet;
+        }
     }
 }

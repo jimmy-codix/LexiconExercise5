@@ -8,6 +8,10 @@ namespace LexiconExercise5.Vehicles
 {
     internal class Motorcycle : Vehicle
     {
-        public Motorcycle(int unitSize) : base(unitSize) { }
+        public int NrOfWheels { get; private set; }
+        public Motorcycle(int unitSize, int nrOfWheels) : base(unitSize) 
+        {
+            NrOfWheels = nrOfWheels;
+        }
     }
 }

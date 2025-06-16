@@ -8,6 +8,10 @@ namespace LexiconExercise5.Vehicles
 {
     internal class Boat : Vehicle
     {
-        public Boat(int unitSize) : base(unitSize) { }
+        public bool IsSinkable { get; private set; }
+        public Boat(int unitSize, bool isSinkable) : base(unitSize) 
+        { 
+            IsSinkable = isSinkable;
+        }
     }
 }

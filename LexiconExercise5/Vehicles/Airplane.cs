@@ -8,6 +8,11 @@ namespace LexiconExercise5.Vehicles
 {
     internal class Airplane : Vehicle
     {
-        public Airplane(int unitSize) : base(unitSize) { }
+        public int NrOfSeats { get; private set; }
+
+        public Airplane(int unitSize, int nrOfSeats) : base(unitSize) 
+        { 
+            NrOfSeats = nrOfSeats;
+        }
     }
 }
