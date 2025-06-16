@@ -10,7 +10,7 @@ namespace LexiconExercise5.Vehicles
     {
         public int NrOfSeats { get; private set; }
 
-        public Airplane(int unitSize, int nrOfSeats) : base(unitSize) 
+        public Airplane(string regNr, int nrOfSeats) : base(regNr, 1) 
         { 
             NrOfSeats = nrOfSeats;
         }

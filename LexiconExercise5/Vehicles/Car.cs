@@ -17,9 +17,10 @@ namespace LexiconExercise5.Vehicles
     internal class Car : Vehicle
     {
         public CarFuelType FuelType { get; private set; }
-        public Car(int unitSize, CarFuelType carFuelType) : base(unitSize) 
+        public Car(string regNr, CarFuelType carFuelType) : base(regNr, 1) 
         { 
             FuelType = carFuelType;
         }
+
     }
 }
