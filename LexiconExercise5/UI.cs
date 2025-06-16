@@ -1,5 +1,6 @@
 ﻿
 
+
 namespace LexiconExercise5
 {
     public static class UI
@@ -59,9 +60,27 @@ namespace LexiconExercise5
             return Console.ReadLine();
         }
 
-        internal static void GarageMenu()
+        internal static void GarageMenu(Dictionary<int, MenuItem> menu)
         {
-            WriteLine(GARAGE_MENU);
+            //WriteLine(GARAGE_MENU);
+            foreach (var item in menu)
+            {
+                WriteLine(item.Value.Text);
+            }
+        }
+
+        internal static string ReadString(string errorText, int max = 100, int min = 0)
+        {
+            do
+            {
+                string? input = Console.ReadLine();
+                if (input == null)
+                    Console.WriteLine(errorText);
+                if (input.Length < min || input.Length > max)
+                    Console.WriteLine(errorText);
+                else
+                    return input;
+            } while (true);
         }
     }
 }
