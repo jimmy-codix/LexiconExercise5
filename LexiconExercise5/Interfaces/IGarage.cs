@@ -2,7 +2,8 @@
 
 namespace LexiconExercise5.Interfaces
 {
-    internal interface IGarage<T> where T : class
+    //internal interface IGarage<T> where T : class
+    internal interface IGarage<T> where T : Vehicle
     {
         T this[int index] { get; set; }
 
@@ -10,8 +11,10 @@ namespace LexiconExercise5.Interfaces
 
         IEnumerator<T> GetEnumerator();
 
-        void Departing(Vehicle vehicle);
+        //void Departing(Vehicle vehicle);
+        void Departing(T vehicle);
 
-        void Park(Vehicle vehicle);
+        //void Park(Vehicle vehicle);
+        void Park(T vehicle);
     }
 }
