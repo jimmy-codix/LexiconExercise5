@@ -1,6 +1,7 @@
 ﻿using LexiconExercise5.Interfaces;
 using LexiconExercise5.Vehicles;
 using System.Collections;
+using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 
 namespace LexiconExercise5
@@ -32,6 +33,7 @@ namespace LexiconExercise5
         {
             _items = new T[size];
             Capacity = size;
+            FreeCapacity = size;
             Count = size;
         }
 
@@ -56,26 +58,28 @@ namespace LexiconExercise5
         }
         */
 
-        public void Park(T item)
+        //TODO: Better validating
+        public bool Park(T item)
         {
             ArgumentNullException.ThrowIfNull(item, nameof(item));
 
-            //Todo: Check this
-            if (CanVehicleFit(item))
-            {
-                //_items[currIndex] = (T)(object)vehicle;
-                _items[currIndex] = item;
-                currIndex++;
-                Count -= item.UnitSize;
-            }
+            if (!CanVehicleFit(item))
+                return false;
 
+            //Find first null to insert vehicle
+            int index = Array.IndexOf(_items, null);
+            if (index < 0)
+                return false;
 
+            _items[index] = item;
+            FreeCapacity--;
 
+            return true;
         }
 
-        private bool CanVehicleFit(Vehicle vehicle) => vehicle.UnitSize < Count;
+        private bool CanVehicleFit(T vehicle) => vehicle.UnitSize <= FreeCapacity;
 
-        public void Departing(T vehicle)
+        public bool Depart(T vehicle)
         {
             throw new NotImplementedException();
         }
