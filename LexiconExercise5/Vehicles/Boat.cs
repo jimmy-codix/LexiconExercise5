@@ -8,6 +8,6 @@ namespace LexiconExercise5.Vehicles
 {
     internal class Boat : Vehicle
     {
-        public Boat() => UnitSize = 3;
+        public Boat(int unitSize) : base(unitSize) { }
     }
 }

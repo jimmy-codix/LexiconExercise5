@@ -5,5 +5,10 @@
         //TODO may be readonly?
         public int UnitSize { get; protected set; } = 1;
 
+        public Vehicle(int unitSize) 
+        { 
+            UnitSize = unitSize;
+        }
+
     }
 }
