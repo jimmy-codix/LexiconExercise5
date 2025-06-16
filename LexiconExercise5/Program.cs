@@ -16,7 +16,7 @@ namespace LexiconExercise5
             //Console.WriteLine();
             //Console.WriteLine();
             //Console.ReadLine();
-            
+
             //var mgr = new Manager();
             //var ui = new UI();
             //var handler = new Handler();
