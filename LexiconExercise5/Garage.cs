@@ -7,9 +7,10 @@ namespace LexiconExercise5
 {
     internal class Garage<T> : IGarage<T>, IEnumerable<T> where T : Vehicle
     {
-        private T[] _items;
+        private readonly T[] _items;
         private int currIndex = 0;
         public int Capacity { get; private set; }
+        public int FreeCapacity { get; private set; }
         public int Count { get; private set; }
         public T this[int index]
         {
