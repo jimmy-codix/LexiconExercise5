@@ -79,9 +79,19 @@ namespace LexiconExercise5
 
         private bool CanVehicleFit(T vehicle) => vehicle.UnitSize <= FreeCapacity;
 
-        public bool Depart(T vehicle)
+        public T? Depart(T vehicle)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < _items.Length; i++)
+            {
+                if (_items[i] == vehicle)
+                {
+                    _items[i] = null!;
+                    FreeCapacity++;
+                    return vehicle;
+                }
+            }
+
+            return null;
         }
     }
 }
