@@ -20,6 +20,11 @@ namespace LexiconExercise5
             return _garage.Park(vehicle);
         }
 
+        public Vehicle DepartVehicle(Vehicle vehicle)
+        {
+            return _garage.Depart(vehicle);
+        }
+
         internal int GetGarageCapacity()
         {
             return _garage.Capacity;
@@ -39,6 +44,24 @@ namespace LexiconExercise5
             }
 
             return list;
+        }
+
+        internal Vehicle? SearchReg(string reg)
+        {
+            return _garage.FirstOrDefault(x => x.RegistrationNr.ToLower() == reg.ToLower());
+        }
+
+        internal Vehicle[] SearchMotorCycle(int nrWheels)
+        {
+            return _garage
+                .OfType<Motorcycle>()
+                .Where(x => x.NrOfWheels == nrWheels)
+                .ToArray();
+        }
+
+        internal Vehicle[] TestSearch(Func<IEnumerable<Vehicle>, Vehicle[]> exp)
+        {
+            return exp(_garage);
         }
     }
 }
