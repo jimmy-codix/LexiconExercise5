@@ -1,4 +1,5 @@
 ﻿using LexiconExercise5.Vehicles;
+using System.Linq.Expressions;
 
 namespace LexiconExercise5
 {
@@ -9,9 +10,10 @@ namespace LexiconExercise5
 
         //Menus
         //private List<Action> _garageMenu;
-        private Dictionary<int, MenuItem> _garageMenu;
-        private Dictionary<int, MenuItemBase> _parkMenu;
+        private Dictionary<int,MenuItem> _garageMenu;
+        private Dictionary<int, MenuItem> _parkMenu;
         private Dictionary<int, MenuItem> _populateMenu;
+        private Dictionary<int, MenuItem> _searchMenu;
         //TODO not implemented correctly
         private Stack<Action> _menuHistory;
         private string _lastMessage;
@@ -34,13 +36,14 @@ namespace LexiconExercise5
             _garageMenu.Add(0, new MenuItem("0. Exit", 0, ExitProgram));
             _garageMenu.Add(1, new MenuItem("1. Park a vehicle", 1, ParkVehicleMenu));
             _garageMenu.Add(2, new MenuItem("2. Remove a vehicle", 2, RemoveVehicle));
-            _garageMenu.Add(3, new MenuItem("3. Populate garage with vehicles", 3, PopulateGarage));
-            _garageMenu.Add(4, new MenuItem("4. View all vehicles in the garage", 4, ViewVehicles));
+            _garageMenu.Add(3, new MenuItem("3. Search for a vehicle", 3, SearchVehicle));
+            _garageMenu.Add(4, new MenuItem("4. Populate garage with vehicles", 4, PopulateGarage));
+            _garageMenu.Add(5, new MenuItem("5. View all vehicles in the garage", 5, ViewVehicles));
 
             //TODO this can be solved in a better way
-            _parkMenu = new Dictionary<int, MenuItemBase>();
+            _parkMenu = new Dictionary<int, MenuItem>();
             _parkMenu.Add(0, new MenuItem("0. Back", 0, GarageMenu));
-            _parkMenu.Add(1, new MenuItemVehicle("1. Airplane", 1, DosomeThing(VehicleType.Car)));
+            _parkMenu.Add(1, new MenuItem("1. Airplane", 1, ParkAirplane));
             _parkMenu.Add(2, new MenuItem("2. Boat", 2, ParkBoat));
             _parkMenu.Add(3, new MenuItem("3. Car", 3, ParkCar));
             _parkMenu.Add(4, new MenuItem("4. Motorcycle", 4, ParkMotorcycle));
@@ -49,8 +52,96 @@ namespace LexiconExercise5
             _populateMenu = new Dictionary<int, MenuItem>();
             _populateMenu.Add(0, new MenuItem("0. Back", 0, GarageMenu));
             _populateMenu.Add(1, new MenuItem("1. Random", 1, PopulateRandom));
+
+            _searchMenu = new Dictionary<int, MenuItem>();
+            _searchMenu.Add(0, new MenuItem("0. Back", 0, GarageMenu));
+            _searchMenu.Add(1, new MenuItem("1. Search Registration number", 1, SearchReg));
+            _searchMenu.Add(2, new MenuItem("2. Search for airplane", 2, SearchAirplane));
+            _searchMenu.Add(3, new MenuItem("3. Search for boat", 3, SearchBoat));
+            _searchMenu.Add(4, new MenuItem("4. Search for bus", 4, SearchBus));
+            _searchMenu.Add(5, new MenuItem("5. Search for car", 5, SearchCar));
+            _searchMenu.Add(6, new MenuItem("6. Search for motorcycle", 6, SearchMotorcycle));
+
             CreateGarage();
             GarageMenu();
+        }
+
+        private void CreateAndPark(VehicleType type)
+        {
+            UI.WriteLine(type.ToString());
+            UI.ReadLine();
+            string reg = GetRegNumber();
+            UI.WriteLine($"Does the bus have a toilet? Enter 0 for no or 1 for yes.");
+            int nr = UI.ReadInt("Error, Does the bus have a toilet? Enter 0 for no or 1 for yes.", 1, 0);
+            bool res = _handler.ParkVehicle(new Bus(reg, Convert.ToBoolean(nr)));
+            if (res == true)
+                _lastMessage = "The bus has been parked.";
+            else
+                _lastMessage = "The bus could NOT be parked.";
+
+            ParkVehicleMenu();
+        }
+
+        private void SearchMotorcycle()
+        {
+            GarageInfo();
+            int wheels = UI.ReadInt("How many wheels does the motocycle have?");
+            //Vehicle[] arr = _handler.SearchMotorCycle(wheels);
+            Func<IEnumerable<Vehicle>, Vehicle[]> exp = y => y.OfType<Motorcycle>().Where(x => x.NrOfWheels == wheels).ToArray();
+            Vehicle[] arr = _handler.TestSearch(exp);
+            if (arr.Length == 0)
+            {
+                UI.WriteLine($"No motorcycle could be found with {wheels} wheels.");
+                return;
+            }
+
+            UI.WriteLine("The following motorcycles was found:");
+            foreach (var vehicle in arr)
+            {
+                UI.WriteLine(vehicle.Details());
+            }
+        }
+
+        private void SearchCar()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SearchBus()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SearchBoat()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SearchAirplane()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SearchReg()
+        {
+            UI.Write("Enter registration to search for:");
+            string reg = UI.ReadString("Error, Enter registration to seach for: ");
+            Vehicle? vehicle =_handler.SearchReg(reg);
+            if (vehicle == null)
+                UI.WriteLine("Result: Nothing matched");
+            else
+                UI.WriteLine($"Result: found {vehicle}");
+        }
+
+        private void SearchVehicle()
+        {
+            GarageInfo();
+            UI.PrintMenu(_searchMenu);
+            UI.Write("Selection: ");
+            int sel = UI.ReadInt("Error, Selection:", _searchMenu.Count - 1);
+
+            _searchMenu[sel].Caller.Invoke();
+
         }
 
         private Action<VehicleType> DosomeThing(VehicleType car)
@@ -83,10 +174,10 @@ namespace LexiconExercise5
                         break;
                     case 3:
                         //TODO Fix this.
-                        vehicle = new Car(rnd.Next(1000, 10001).ToString(), CarFuelType.Petrol98);
+                        vehicle = new Car(rnd.Next(1000, 10001).ToString(), rnd.Next(1,6));
                         break;
                     case 4:
-                        vehicle = new Motorcycle(rnd.Next(1000, 10001).ToString(), rnd.Next(2, 7));
+                        vehicle = new Motorcycle(rnd.Next(1000, 10001).ToString(), rnd.Next(2, 5));
                         break;
                     default:
                         break;
@@ -106,7 +197,18 @@ namespace LexiconExercise5
 
         private void ViewVehicles()
         {
-            throw new NotImplementedException();
+            GarageInfo();
+            List<Vehicle> vehicles = _handler.GetVehicles();
+            for (int i = 0; i < vehicles.Count; i++)
+            {
+                UI.WriteLine($"{i + 1} {vehicles[i].Details()}");
+            }
+
+            UI.WriteLine("");
+            UI.WriteLine("Enter 0 to go back:");
+            //This will be 0 no need to check input.
+            UI.ReadInt("Error, Enter 0 to go back:", 0, 0);
+            GarageMenu();
         }
 
         //TODO implement a menu back method
@@ -131,22 +233,58 @@ namespace LexiconExercise5
 
         private void ParkMotorcycle()
         {
-            throw new NotImplementedException();
+            string reg = GetRegNumber();
+            UI.WriteLine($"How many wheels does this motorcycle have?");
+            int nr = UI.ReadInt("Error, How many wheels does this motorcycle have?", 1000, 1);
+            bool res = _handler.ParkVehicle(new Motorcycle(reg, nr));
+            if (res == true)
+                _lastMessage = "The Motorcycle has been parked.";
+            else
+                _lastMessage = "The Motorcycle could NOT be parked.";
+
+            ParkVehicleMenu();
         }
 
         private void ParkCar()
         {
-            throw new NotImplementedException();
+            string reg = GetRegNumber();
+            UI.WriteLine($"How many car doors does this car have?");
+            int nr = UI.ReadInt("Error, How many car doors does this car have?", 1000, 1);
+            bool res = _handler.ParkVehicle(new Car(reg, nr));
+            if (res == true)
+                _lastMessage = "The Car has been parked.";
+            else
+                _lastMessage = "The Car could NOT be parked.";
+
+            ParkVehicleMenu();
         }
 
         private void ParkBoat()
         {
-            throw new NotImplementedException();
+            string reg = GetRegNumber();
+            UI.WriteLine($"Is this boat sinkable (0 for no and 1 for yes)?");
+            int nr = UI.ReadInt("Error, Is this boat sinkable (0 for no and 1 for yes)?", 1, 0);
+            bool res = _handler.ParkVehicle(new Boat(reg, Convert.ToBoolean(nr)));
+            if (res == true)
+                _lastMessage = "The Boat has been parked.";
+            else
+                _lastMessage = "The Boat could NOT be parked.";
+
+            ParkVehicleMenu();
         }
 
         private void ParkAirplane()
         {
-            throw new NotImplementedException();
+            string reg = GetRegNumber();
+            UI.WriteLine($"How many seats are there?");
+            int nr = UI.ReadInt("Error, How many seats are there?", 1000, 1);
+            bool res = _handler.ParkVehicle(new Airplane(reg, nr));
+            if (res == true)
+                _lastMessage = "The Airplane has been parked.";
+            else
+                _lastMessage = "The Airplane could NOT be parked.";
+
+            ParkVehicleMenu();
         }
 
         private void GarageInfo()
@@ -160,7 +298,7 @@ namespace LexiconExercise5
         private void GarageMenu()
         {
             GarageInfo();
-            UI.GarageMenu(_garageMenu);
+            UI.PrintMenu(_garageMenu);
             _menuHistory.Push(GarageMenu);
             int val = UI.ReadInt($"Error, Valid numers are 0-{_garageMenu.Count-1}", _garageMenu.Count-1);
             _garageMenu[val].Caller.Invoke();
@@ -182,7 +320,7 @@ namespace LexiconExercise5
         private void ParkVehicleMenu()
         {
             GarageInfo();
-            UI.GarageMenu(_parkMenu);
+            UI.PrintMenu(_parkMenu);
             UI.WriteLine(_lastMessage);
             _lastMessage = "";
             //if (_menuHistory.Peek != ParkVehicle)
@@ -193,12 +331,42 @@ namespace LexiconExercise5
 
         private void RemoveVehicle()
         {
+            GarageInfo();
+            UI.WriteLine("0 Back");
+            List<Vehicle> vehicles = PrintVehicles();
+            PrintLastMessage();
+            UI.Write("Select a vehicle to remove or 0 to go back:");
+            int sel = UI.ReadInt($"Error, Select a vehicle to remove ({0}-{vehicles.Count}:", vehicles.Count, 0);
+            if (sel == 0)
+                GarageMenu();
+
+            Vehicle vehicle = _handler.DepartVehicle(vehicles[sel - 1]);
+            if (vehicle == null)
+                _lastMessage = $"{vehicle} could NOT be removed";
+            else
+                _lastMessage = $"{vehicle} has been removed";
+
+            RemoveVehicle();
+        }
+
+        private void PrintLastMessage()
+        {
+            if (_lastMessage != "")
+            {
+                UI.WriteLine(_lastMessage);
+                _lastMessage = "";
+            }
+        }
+
+        private List<Vehicle> PrintVehicles()
+        {
             List<Vehicle> vehicles = _handler.GetVehicles();
-            UI.WriteLine("Select a vehicle to remove:");
             for (int i = 0; i < vehicles.Count; i++)
             {
                 UI.WriteLine($"{i + 1} {vehicles[i]}");
             }
+
+            return vehicles;
         }
 
         private void PopulateGarage()
