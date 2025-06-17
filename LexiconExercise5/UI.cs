@@ -60,9 +60,8 @@ namespace LexiconExercise5
             return Console.ReadLine();
         }
 
-        internal static void GarageMenu(Dictionary<int, MenuItem> menu)
+        internal static void PrintMenu(Dictionary<int, MenuItem> menu)
         {
-            //WriteLine(GARAGE_MENU);
             foreach (var item in menu)
             {
                 WriteLine(item.Value.Text);
