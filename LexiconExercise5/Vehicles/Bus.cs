@@ -13,5 +13,10 @@ namespace LexiconExercise5.Vehicles
         { 
             HasToilet = hasToilet;
         }
+
+        public override string Details()
+        {
+            return base.ToString() + $" Has toilet={HasToilet}";
+        }
     }
 }

@@ -14,5 +14,10 @@ namespace LexiconExercise5.Vehicles
             //UnitSize = 3;
             IsSinkable = isSinkable;
         }
+
+        public override string Details()
+        {
+            return base.ToString() + $" Sinkable={IsSinkable}";
+        }
     }
 }

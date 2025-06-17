@@ -13,5 +13,10 @@ namespace LexiconExercise5.Vehicles
         {
             NrOfWheels = nrOfWheels;
         }
+
+        public override string Details()
+        {
+            return base.ToString() + $" Nr wheels={NrOfWheels}";
+        }
     }
 }

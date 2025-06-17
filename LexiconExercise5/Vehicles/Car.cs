@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace LexiconExercise5.Vehicles
 {
+    /*
     public enum CarFuelType
     {
         Petrol95,
@@ -13,13 +14,20 @@ namespace LexiconExercise5.Vehicles
         Diesel,
         Gas
     }
+    */
 
     internal class Car : Vehicle
     {
-        public CarFuelType FuelType { get; private set; }
-        public Car(string regNr, CarFuelType carFuelType) : base(regNr, 1) 
+        //public CarFuelType FuelType { get; private set; }
+        public int NrCarDoors { get; private set; }
+        public Car(string regNr, int nrCarDoors) : base(regNr, 1) 
         { 
-            FuelType = carFuelType;
+            NrCarDoors = nrCarDoors;
+        }
+
+        public override string Details()
+        {
+            return base.ToString() + $" Car doors={NrCarDoors}";
         }
 
     }
