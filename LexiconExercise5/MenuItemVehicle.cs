@@ -4,12 +4,12 @@ namespace LexiconExercise5
 {
     internal class MenuItemVehicle : MenuItemBase
     {
-        private VehicleType _vehicleType;
-        private Action<VehicleType> _action;
-        public MenuItemVehicle(string text, int key, Action<VehicleType> action) : base (text,key)
+        public VehicleType Type {get; private set;}
+        public Action<VehicleType> Caller { get; private set; }
+        public MenuItemVehicle(string text, int key, Action<VehicleType> caller, VehicleType type) : base (text,key)
         {
-            _action = action;
+            Caller = caller;
+            Type = type;
         }
-
     }
 }
