@@ -27,8 +27,10 @@
 
         public override string ToString()
         { 
-            return this.GetType().Name + " " + this.RegistrationNr;
+            return this.GetType().Name + " Reg=" + this.RegistrationNr;
         }
+
+        public abstract string Details();
 
     }
 }
