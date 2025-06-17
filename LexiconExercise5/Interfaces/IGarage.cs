@@ -12,7 +12,7 @@ namespace LexiconExercise5.Interfaces
         IEnumerator<T> GetEnumerator();
 
         //void Departing(Vehicle vehicle);
-        bool Depart(T vehicle);
+        T? Depart(T vehicle);
 
         //void Park(Vehicle vehicle);
         bool Park(T vehicle);
