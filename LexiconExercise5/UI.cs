@@ -5,31 +5,39 @@ namespace LexiconExercise5
 {
     public static class UI
     {
-        const string GARAGE_CREATE_INFO = "Please enter the capacaty of your new garage:";
+        public const string GARAGE_CREATE_INFO = "Please enter the capacaty of your new garage:";
         const string GARAGE_MENU = @"
         1. Park a vehicle
         2. Remove a vehicle
         3. Populate garage with vehicles
         0. Exit program";
 
-        public static int ReadInt(string errorText, int max = 100, int min = 0)
+        public static int ReadInt(string text, int max = 100, int min = 0)
         {
+            text = text.Trim() + " ";
+            string errorText = $"Error, valid inputs are numbers ({min}-{max}), {text}";
+            Write(text);
             do
             {
                 int value;
                 string? raw = Console.ReadLine();
+
                 if (raw == null)
+                {
+                    Write(errorText);
                     continue;
+                }
+
                 if (int.TryParse(raw, out value))
                 {
                     if (value >= min && value <= max)
                         return value;
                     else
-                        Console.WriteLine(errorText);
+                        Write(errorText);
                 }
                 else
                 {
-                    Console.WriteLine(errorText);
+                        Write(errorText);
                 }
             } while (true);
 
@@ -68,17 +76,25 @@ namespace LexiconExercise5
             }
         }
 
-        internal static string ReadString(string errorText, int max = 100, int min = 0)
+        internal static string ReadString(string text, int max = 100, int min = 0)
         {
+            text = text.Trim() + " ";
+            string errorText = $"Error, valid inputs are numbers ({min}-{max}), {text}";
+            Write(text);
             do
             {
                 string? input = Console.ReadLine();
                 if (input == null)
-                    Console.WriteLine(errorText);
+                {
+                    Write(errorText);
+                    continue;
+                }
+                
                 if (input.Length < min || input.Length > max)
-                    Console.WriteLine(errorText);
+                    Write(errorText);
                 else
                     return input;
+
             } while (true);
         }
     }
