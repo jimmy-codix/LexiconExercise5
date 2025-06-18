@@ -98,8 +98,7 @@ namespace LexiconExercise5
         {
             GarageInfo();
             UI.PrintMenu(_searchMenu);
-            UI.Write("Selection: ");
-            int sel = UI.ReadInt("Error, Selection:", _searchMenu.Count - 1);
+            int sel = UI.ReadInt("Selection: ", _searchMenu.Count - 1);
 
             _searchMenu[sel].Caller.Invoke();
 
@@ -112,8 +111,7 @@ namespace LexiconExercise5
 
         private void PopulateRandom()
         {
-            UI.WriteLine("How many vehicles would you like to create and park (1-100)?");
-            int nrOfVehicles = UI.ReadInt("Error, How many vehicles would you like to create and park (1-100)?",100,1);
+            int nrOfVehicles = UI.ReadInt("How many vehicles would you like to create and park?:",100,1);
 
             Random rnd = new Random();
             Vehicle vehicle = null;
@@ -151,9 +149,9 @@ namespace LexiconExercise5
                     UI.WriteLine($"The {vehicle.Details()} could NOT be parked.");
             }
 
-            UI.WriteLine("Enter 0 to go back to Garage Menu.");
-            if (UI.ReadInt("Error, Enter 0 to go back to Garage Menu.", 0, 0) == 0)
-                GarageMenu();
+            //This will always be zero. Reading and in is jsut for a "pause moment".
+            UI.ReadInt("Input 0 to go back:", 0, 0);
+            GarageMenu();
         }
 
         private void ViewVehicles()
@@ -165,10 +163,8 @@ namespace LexiconExercise5
                 UI.WriteLine($"{i + 1} {vehicles[i].Details()}");
             }
 
-            UI.WriteLine("");
-            UI.WriteLine("Enter 0 to go back:");
-            //This will be 0 no need to check input.
-            UI.ReadInt("Error, Enter 0 to go back:", 0, 0);
+            //This will always return 0. So just for a pause effect.
+            UI.ReadInt("Enter 0 to go back:", 0, 0);
             GarageMenu();
         }
 
@@ -190,15 +186,14 @@ namespace LexiconExercise5
         {
             GarageInfo();
             UI.PrintMenu(_garageMenu);
-            _menuHistory.Push(GarageMenu);
-            int val = UI.ReadInt($"Error, Valid numers are 0-{_garageMenu.Count-1}", _garageMenu.Count-1);
+            int val = UI.ReadInt("Selection: ",_garageMenu.Count-1,0);
             _garageMenu[val].Caller.Invoke();
         }
 
         private void CreateGarage()
         {
-            UI.CreateGarageMenu();
-            int capacity = UI.ReadInt("Error, Valid numbers are 1-1000", 1000, 1);
+            //UI.CreateGarageMenu();
+            int capacity = UI.ReadInt(UI.GARAGE_CREATE_INFO, 1000, 1);
             _handler.CreateGarage(capacity);
         }
 
@@ -214,9 +209,7 @@ namespace LexiconExercise5
             UI.PrintMenu(_parkMenu);
             UI.WriteLine(_lastMessage);
             _lastMessage = "";
-            //if (_menuHistory.Peek != ParkVehicle)
-            //    _menuHistory.Push(ParkVehicleMenu);
-            int val = UI.ReadInt($"Error, Valid numers are 0-{_parkMenu.Count - 1}", _parkMenu.Count - 1);
+            int val = UI.ReadInt("Selection:",_parkMenu.Count - 1);
             _parkMenu[val].Caller.Invoke();
         }
 
@@ -226,10 +219,12 @@ namespace LexiconExercise5
             UI.WriteLine("0 Back");
             List<Vehicle> vehicles = PrintVehicles();
             PrintLastMessage();
-            UI.Write("Select a vehicle to remove or 0 to go back:");
-            int sel = UI.ReadInt($"Error, Select a vehicle to remove ({0}-{vehicles.Count}:", vehicles.Count, 0);
+            int sel = UI.ReadInt($"Select a vehicle to remove or 0 to go back:", vehicles.Count, 0);
             if (sel == 0)
+            {
                 GarageMenu();
+                return;
+            }
 
             Vehicle vehicle = _handler.DepartVehicle(vehicles[sel - 1]);
             if (vehicle == null)
