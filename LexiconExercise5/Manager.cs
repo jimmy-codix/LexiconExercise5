@@ -125,7 +125,7 @@ namespace LexiconExercise5
 
                 switch (sel)
                 {
-                    case 0: vehicle = new Airplane(rnd.Next(1000,10001).ToString(), rnd.Next(100, 201));
+                    case 0: vehicle = new Airplane(rnd.Next(1000,10001).ToString(), rnd.Next(Airplane.SEATS_MIN, Airplane.SEATS_MAX+1));
                         break;
                     case 1:
                         vehicle = new Boat(rnd.Next(1000, 10001).ToString(), Convert.ToBoolean(rnd.Next(0,2)));
@@ -135,10 +135,10 @@ namespace LexiconExercise5
                         break;
                     case 3:
                         //TODO Fix this.
-                        vehicle = new Car(rnd.Next(1000, 10001).ToString(), rnd.Next(1,6));
+                        vehicle = new Car(rnd.Next(1000, 10001).ToString(), rnd.Next(Car.DOORS_MIN,Car.DOORS_MAX+1));
                         break;
                     case 4:
-                        vehicle = new Motorcycle(rnd.Next(1000, 10001).ToString(), rnd.Next(2, 5));
+                        vehicle = new Motorcycle(rnd.Next(1000, 10001).ToString(), rnd.Next(Motorcycle.WHEELS_MIN, Motorcycle.WHEELS_MAX+1));
                         break;
                     default:
                         break;
@@ -146,9 +146,9 @@ namespace LexiconExercise5
 
                 bool res = _handler.ParkVehicle(vehicle);
                 if (res == true)
-                    UI.WriteLine($"The {vehicle} has been parked.");
+                    UI.WriteLine($"The {vehicle.Details()} has been parked.");
                 else
-                    UI.WriteLine($"The {vehicle} could NOT be parked.");
+                    UI.WriteLine($"The {vehicle.Details()} could NOT be parked.");
             }
 
             UI.WriteLine("Enter 0 to go back to Garage Menu.");
