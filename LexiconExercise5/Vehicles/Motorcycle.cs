@@ -8,10 +8,16 @@ namespace LexiconExercise5.Vehicles
 {
     internal class Motorcycle : Vehicle
     {
+        public const int WHEELS_MAX = 6;
+        public const int WHEELS_MIN = 2;
         public int NrOfWheels { get; private set; }
         public Motorcycle(string regNr, int nrOfWheels) : base(regNr, 1) 
         {
-            NrOfWheels = nrOfWheels;
+            if (nrOfWheels < WHEELS_MIN || nrOfWheels > WHEELS_MAX)
+                throw new ArgumentOutOfRangeException(nameof(nrOfWheels), 
+                    $"The number of wheels must be between {WHEELS_MIN} and {WHEELS_MAX}.");
+            else
+                NrOfWheels = nrOfWheels;
         }
 
         public override string Details()
