@@ -67,21 +67,21 @@ namespace LexiconExercise5
             GarageMenu();
         }
 
-        private void CreateAndPark(VehicleType type)
-        {
-            UI.WriteLine(type.ToString());
-            UI.ReadLine();
-            string reg = GetRegNumber();
-            UI.WriteLine($"Does the bus have a toilet? Enter 0 for no or 1 for yes.");
-            int nr = UI.ReadInt("Error, Does the bus have a toilet? Enter 0 for no or 1 for yes.", 1, 0);
-            bool res = _handler.ParkVehicle(new Bus(reg, Convert.ToBoolean(nr)));
-            if (res == true)
-                _lastMessage = "The bus has been parked.";
-            else
-                _lastMessage = "The bus could NOT be parked.";
+        //private void CreateAndPark(VehicleType type)
+        //{
+        //    UI.WriteLine(type.ToString());
+        //    UI.ReadLine();
+        //    string reg = GetRegNumber();
+        //    //UI.WriteLine($"Does the bus have a toilet? Enter 0 for no or 1 for yes.");
+        //    int nr = UI.ReadInt("Does the bus have a toilet? Enter 0 for no or 1 for yes.", 1, 0);
+        //    bool res = _handler.ParkVehicle(new Bus(reg, Convert.ToBoolean(nr)));
+        //    if (res == true)
+        //        _lastMessage = "The bus has been parked.";
+        //    else
+        //        _lastMessage = "The bus could NOT be parked.";
 
-            ParkVehicleMenu();
-        }
+        //    ParkVehicleMenu();
+        //}
 
         private void SearchReg()
         {
