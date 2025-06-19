@@ -1,4 +1,4 @@
-﻿namespace LexiconExercise5
+﻿namespace LexiconExercise5.UserInterface
 {
     internal abstract class MenuItemBase
     {

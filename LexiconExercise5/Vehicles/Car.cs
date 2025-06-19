@@ -16,7 +16,7 @@ namespace LexiconExercise5.Vehicles
     }
     */
 
-    internal class Car : Vehicle
+    internal class Car : VehicleBase
     {
         //public CarFuelType FuelType { get; private set; }
         public const int DOORS_MAX = 5;

@@ -6,21 +6,21 @@ namespace LexiconExercise5
     internal class Handler
     {
         //Handler sksa sköta mera
-        private Garage<Vehicle> _garage;
+        private Garage<VehicleBase> _garage;
         public Handler() { }
 
         //TODO Denna kan flyttas till konstruktorn.
         public void CreateGarage(int capacity)
         {
-            _garage = new Garage<Vehicle>(capacity);
+            _garage = new Garage<VehicleBase>(capacity);
         }
 
-        public bool ParkVehicle(Vehicle vehicle)
+        public bool ParkVehicle(VehicleBase vehicle)
         {
             return _garage.Park(vehicle);
         }
 
-        public Vehicle DepartVehicle(Vehicle vehicle)
+        public VehicleBase DepartVehicle(VehicleBase vehicle)
         {
             return _garage.Depart(vehicle);
         }
@@ -35,9 +35,9 @@ namespace LexiconExercise5
             return _garage.FreeCapacity;
         }
 
-        public List<Vehicle> GetVehicles()
+        public List<VehicleBase> GetVehicles()
         {
-            List<Vehicle> list = new List<Vehicle>();
+            List<VehicleBase> list = new List<VehicleBase>();
             foreach (var item in _garage)
             {
                 list.Add(item);
@@ -46,12 +46,12 @@ namespace LexiconExercise5
             return list;
         }
 
-        internal Vehicle? SearchReg(string reg)
+        internal VehicleBase? SearchReg(string reg)
         {
             return _garage.FirstOrDefault(x => x.RegistrationNr.ToLower() == reg.ToLower());
         }
 
-        internal Vehicle[] SearchMotorCycle(int nrWheels)
+        internal VehicleBase[] SearchMotorCycle(int nrWheels)
         {
             return _garage
                 .OfType<Motorcycle>()
@@ -59,7 +59,7 @@ namespace LexiconExercise5
                 .ToArray();
         }
 
-        internal Vehicle[] TestSearch(Func<IEnumerable<Vehicle>, Vehicle[]> exp)
+        internal VehicleBase[] TestSearch(Func<IEnumerable<VehicleBase>, VehicleBase[]> exp)
         {
             return exp(_garage);
         }

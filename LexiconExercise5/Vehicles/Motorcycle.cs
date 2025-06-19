@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LexiconExercise5.Vehicles
 {
-    internal class Motorcycle : Vehicle
+    internal class Motorcycle : VehicleBase
     {
         public const int WHEELS_MAX = 6;
         public const int WHEELS_MIN = 2;

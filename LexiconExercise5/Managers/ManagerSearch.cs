@@ -1,4 +1,5 @@
-﻿using LexiconExercise5.Vehicles;
+﻿using LexiconExercise5.UserInterface;
+using LexiconExercise5.Vehicles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,9 @@ namespace LexiconExercise5
 {
     internal partial class Manager
     {
-        private void SearchVehicle(Func<IEnumerable<Vehicle>, Vehicle[]> exp)
+        private void SearchVehicle(Func<IEnumerable<VehicleBase>, VehicleBase[]> exp)
         {
-            Vehicle[] arr = _handler.TestSearch(exp);
+            VehicleBase[] arr = _handler.TestSearch(exp);
             if (arr.Length == 0)
             {
                 UI.WriteLine($"No match was found.");

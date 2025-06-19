@@ -1,7 +1,4 @@
-﻿
-
-
-namespace LexiconExercise5
+﻿namespace LexiconExercise5.UserInterface
 {
     public static class UI
     {

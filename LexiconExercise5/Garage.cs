@@ -6,7 +6,7 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace LexiconExercise5
 {
-    internal class Garage<T> : IGarage<T>, IEnumerable<T> where T : Vehicle
+    internal class Garage<T> : IGarage<T>, IEnumerable<T> where T : VehicleBase
     {
         private readonly T[] _items;
         private int currIndex = 0;

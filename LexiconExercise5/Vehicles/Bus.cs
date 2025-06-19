@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LexiconExercise5.Vehicles
 {
-    internal class Bus : Vehicle
+    internal class Bus : VehicleBase
     {
         public bool HasToilet { get; private set; }
         public Bus(string regNr, bool hasToilet) : base(regNr, 1) 

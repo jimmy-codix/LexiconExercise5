@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LexiconExercise5.Vehicles
 {
-    internal class Airplane : Vehicle
+    internal class Airplane : VehicleBase
     {
         public const int SEATS_MAX = 300;
         public const int SEATS_MIN = 100;

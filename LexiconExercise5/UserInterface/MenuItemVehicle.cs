@@ -1,6 +1,6 @@
 ﻿using LexiconExercise5.Vehicles;
 
-namespace LexiconExercise5
+namespace LexiconExercise5.UserInterface
 {
     internal class MenuItemVehicle : MenuItemBase
     {

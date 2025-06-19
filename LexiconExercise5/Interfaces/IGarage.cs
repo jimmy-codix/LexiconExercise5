@@ -3,7 +3,7 @@
 namespace LexiconExercise5.Interfaces
 {
     //internal interface IGarage<T> where T : class
-    internal interface IGarage<T> where T : Vehicle
+    internal interface IGarage<T> where T : VehicleBase
     {
         T this[int index] { get; set; }
 

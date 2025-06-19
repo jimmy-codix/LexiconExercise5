@@ -1,4 +1,5 @@
-﻿using LexiconExercise5.Vehicles;
+﻿using LexiconExercise5.UserInterface;
+using LexiconExercise5.Vehicles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace LexiconExercise5
 {
     internal partial class Manager
     {
-        private void ParkVehicle(Vehicle vehicle)
+        private void ParkVehicle(VehicleBase vehicle)
         {
             bool res = _handler.ParkVehicle(vehicle);
             if (res == true)

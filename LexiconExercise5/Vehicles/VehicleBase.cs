@@ -9,14 +9,14 @@
         Car,
         Motorcycle
     }
-    internal abstract class Vehicle
+    internal abstract class VehicleBase
     {
         //TODO may be readonly?
         //TODO unitsize is always 1. At this moment it will be 1 until i extend it.
         public int UnitSize { get; private set; } = 1;
         public string RegistrationNr { get; private set; }
 
-        public Vehicle(string registrationNr, int unitSize) 
+        public VehicleBase(string registrationNr, int unitSize) 
         { 
             UnitSize = unitSize;
             if (registrationNr.Length < 1 || registrationNr.Length > 6)

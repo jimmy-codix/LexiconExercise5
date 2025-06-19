@@ -1,4 +1,5 @@
-﻿using LexiconExercise5.Vehicles;
+﻿using LexiconExercise5.UserInterface;
+using LexiconExercise5.Vehicles;
 using System.Linq.Expressions;
 
 namespace LexiconExercise5
@@ -85,9 +86,10 @@ namespace LexiconExercise5
 
         private void SearchReg()
         {
+            UI.WriteLine("Test");
             UI.Write("Enter registration to search for:");
             string reg = UI.ReadString("Error, Enter registration to seach for: ");
-            Vehicle? vehicle =_handler.SearchReg(reg);
+            VehicleBase? vehicle =_handler.SearchReg(reg);
             if (vehicle == null)
                 UI.WriteLine("Result: Nothing matched");
             else
@@ -114,7 +116,7 @@ namespace LexiconExercise5
             int nrOfVehicles = UI.ReadInt("How many vehicles would you like to create and park?:",100,1);
 
             Random rnd = new Random();
-            Vehicle vehicle = null;
+            VehicleBase vehicle = null;
 
             for (int i = 0; i < nrOfVehicles; i++)
             {
@@ -157,7 +159,7 @@ namespace LexiconExercise5
         private void ViewVehicles()
         {
             GarageInfo();
-            List<Vehicle> vehicles = _handler.GetVehicles();
+            List<VehicleBase> vehicles = _handler.GetVehicles();
             for (int i = 0; i < vehicles.Count; i++)
             {
                 UI.WriteLine($"{i + 1} {vehicles[i].Details()}");
@@ -217,7 +219,7 @@ namespace LexiconExercise5
         {
             GarageInfo();
             UI.WriteLine("0 Back");
-            List<Vehicle> vehicles = PrintVehicles();
+            List<VehicleBase> vehicles = PrintVehicles();
             PrintLastMessage();
             int sel = UI.ReadInt($"Select a vehicle to remove or 0 to go back:", vehicles.Count, 0);
             if (sel == 0)
@@ -226,7 +228,7 @@ namespace LexiconExercise5
                 return;
             }
 
-            Vehicle vehicle = _handler.DepartVehicle(vehicles[sel - 1]);
+            VehicleBase vehicle = _handler.DepartVehicle(vehicles[sel - 1]);
             if (vehicle == null)
                 _lastMessage = $"{vehicle} could NOT be removed";
             else
@@ -244,9 +246,9 @@ namespace LexiconExercise5
             }
         }
 
-        private List<Vehicle> PrintVehicles()
+        private List<VehicleBase> PrintVehicles()
         {
-            List<Vehicle> vehicles = _handler.GetVehicles();
+            List<VehicleBase> vehicles = _handler.GetVehicles();
             for (int i = 0; i < vehicles.Count; i++)
             {
                 UI.WriteLine($"{i + 1} {vehicles[i]}");
