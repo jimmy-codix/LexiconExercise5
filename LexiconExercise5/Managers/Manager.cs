@@ -158,12 +158,29 @@ namespace LexiconExercise5
 
         private void ViewVehicles()
         {
-            GarageInfo();
+            //Initiate counters for vehicletypes with 0 to avoid exceptions
+            Dictionary<VehicleType, int>  vehicleCounter = Enum.GetValues<VehicleType>()
+                .ToDictionary(key => key, value => 0);
+
             List<VehicleBase> vehicles = _handler.GetVehicles();
-            for (int i = 0; i < vehicles.Count; i++)
+
+            foreach (var vehicle in vehicles)
             {
-                UI.WriteLine($"{i + 1} {vehicles[i].Details()}");
+                if (!Enum.TryParse<VehicleType>(vehicle.GetType().Name, false, out var tp))
+                    throw new NotSupportedException($"Vehicle type '{vehicle.GetType().Name}' is not supported.");
+
+                if (!vehicleCounter.ContainsKey(tp))
+                    throw new NotSupportedException($"Vehicle type '{vehicle.GetType().Name}' is not supported.");
+
+                vehicleCounter[tp]++;
+
+                UI.WriteLine($"{vehicles.IndexOf(vehicle) + 1} {vehicle.Details()}");
             }
+
+            //Loop and print out counter for each VehicleType
+            Enum.GetValues<VehicleType>()
+                .ToList()
+                .ForEach(type => UI.WriteLine($"Nr {type}s: {vehicleCounter[type]}"));
 
             //This will always return 0. So just for a pause effect.
             UI.ReadInt("Enter 0 to go back:", 0, 0);
