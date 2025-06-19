@@ -36,8 +36,8 @@ namespace LexiconExercise5
             _garageMenu = new Dictionary<int, MenuItem>();
             _garageMenu.Add(0, new MenuItem("0. Exit", 0, ExitProgram));
             _garageMenu.Add(1, new MenuItem("1. Park a vehicle", 1, ParkVehicleMenu));
-            _garageMenu.Add(2, new MenuItem("2. Remove a vehicle", 2, RemoveVehicle));
-            _garageMenu.Add(3, new MenuItem("3. Search for a vehicle", 3, SearchVehicle));
+            _garageMenu.Add(2, new MenuItem("2. Remove a vehicle", 2, RemoveVehicleMenu));
+            _garageMenu.Add(3, new MenuItem("3. Search for a vehicle", 3, SearchMenu));
             _garageMenu.Add(4, new MenuItem("4. Populate garage with vehicles", 4, PopulateGarage));
             _garageMenu.Add(5, new MenuItem("5. View all vehicles in the garage", 5, ViewVehicles));
 
@@ -94,7 +94,7 @@ namespace LexiconExercise5
                 UI.WriteLine($"Result: found {vehicle}");
         }
 
-        private void SearchVehicle()
+        private void SearchMenu()
         {
             GarageInfo();
             UI.PrintMenu(_searchMenu);
@@ -213,7 +213,7 @@ namespace LexiconExercise5
             _parkMenu[val].Caller.Invoke();
         }
 
-        private void RemoveVehicle()
+        private void RemoveVehicleMenu()
         {
             GarageInfo();
             UI.WriteLine("0 Back");
@@ -232,7 +232,7 @@ namespace LexiconExercise5
             else
                 _lastMessage = $"{vehicle} has been removed";
 
-            RemoveVehicle();
+            RemoveVehicleMenu();
         }
 
         private void PrintLastMessage()
@@ -263,7 +263,7 @@ namespace LexiconExercise5
 
         private void ExitProgram()
         {
-            UI.WriteLine("Exit");
+            Environment.Exit(0);
         }
     }
 }
