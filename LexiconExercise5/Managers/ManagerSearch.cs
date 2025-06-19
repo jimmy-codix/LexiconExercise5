@@ -14,7 +14,7 @@ namespace LexiconExercise5
     {
         private void SearchVehicle(Func<IEnumerable<VehicleBase>, VehicleBase[]> exp)
         {
-            VehicleBase[] arr = _handler.TestSearch(exp);
+            VehicleBase[] arr = _handler.Search(exp);
             if (arr.Length == 0)
             {
                 UI.WriteLine($"No match was found.");

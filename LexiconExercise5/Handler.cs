@@ -3,7 +3,7 @@ using LexiconExercise5.Vehicles;
 
 namespace LexiconExercise5
 {
-    internal class Handler
+    public class Handler : IHandler
     {
         //Handler sksa sköta mera
         private Garage<VehicleBase> _garage;
@@ -25,12 +25,12 @@ namespace LexiconExercise5
             return _garage.Depart(vehicle);
         }
 
-        internal int GetGarageCapacity()
+        public int GetGarageCapacity()
         {
             return _garage.Capacity;
         }
 
-        internal int GetGarageFreeCapacity()
+        public int GetGarageFreeCapacity()
         {
             return _garage.FreeCapacity;
         }
@@ -46,25 +46,17 @@ namespace LexiconExercise5
             return list;
         }
 
-        internal VehicleBase? SearchReg(string reg)
+        public VehicleBase? SearchReg(string reg)
         {
             return _garage.FirstOrDefault(x => x.RegistrationNr.ToLower() == reg.ToLower());
         }
 
-        internal VehicleBase[] SearchMotorCycle(int nrWheels)
-        {
-            return _garage
-                .OfType<Motorcycle>()
-                .Where(x => x.NrOfWheels == nrWheels)
-                .ToArray();
-        }
-
-        internal VehicleBase[] TestSearch(Func<IEnumerable<VehicleBase>, VehicleBase[]> exp)
+        public VehicleBase[] Search(Func<IEnumerable<VehicleBase>, VehicleBase[]> exp)
         {
             return exp(_garage);
         }
 
-        internal bool IsRegUnique(string reg)
+        public bool IsRegUnique(string reg)
         {
             VehicleBase? vehicle = SearchReg(reg);
             if (vehicle == null)

@@ -34,7 +34,7 @@
                 }
                 else
                 {
-                        Write(errorText);
+                    Write(errorText);
                 }
             } while (true);
 
@@ -86,7 +86,7 @@
                     Write(errorText);
                     continue;
                 }
-                
+
                 if (input.Length < min || input.Length > max)
                     Write(errorText);
                 else

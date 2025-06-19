@@ -1,4 +1,5 @@
-﻿using LexiconExercise5.UserInterface;
+﻿using LexiconExercise5.Interfaces;
+using LexiconExercise5.UserInterface;
 using LexiconExercise5.Vehicles;
 using System.Linq.Expressions;
 
@@ -8,7 +9,7 @@ namespace LexiconExercise5
     //internal class Manager
     internal partial class Manager
     {
-        private Handler _handler;
+        private IHandler _handler;
 
         //Menus
         //private List<Action> _garageMenu;
@@ -16,8 +17,6 @@ namespace LexiconExercise5
         private Dictionary<int, MenuItem> _parkMenu;
         private Dictionary<int, MenuItem> _populateMenu;
         private Dictionary<int, MenuItem> _searchMenu;
-        //TODO not implemented correctly
-        private Stack<Action> _menuHistory;
         private string _lastMessage;
         //TODO skicka vidare till handlern
         //TODO Använd dictionary for UI
@@ -26,14 +25,7 @@ namespace LexiconExercise5
         public Manager()
         {
             _handler = new Handler();
-            _menuHistory = new Stack<Action>();
-            //_garageMenu =
-            //[
-            //    ExitProgram, 
-            //    ParkVehicle, 
-            //    RemoveVehicle, 
-            //    PopulateGarage
-            //];
+
             _garageMenu = new Dictionary<int, MenuItem>();
             _garageMenu.Add(0, new MenuItem("0. Exit", 0, ExitProgram));
             _garageMenu.Add(1, new MenuItem("1. Park a vehicle", 1, ParkVehicleMenu));

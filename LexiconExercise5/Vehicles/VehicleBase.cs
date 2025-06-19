@@ -9,7 +9,7 @@
         Car,
         Motorcycle
     }
-    internal abstract class VehicleBase
+    public abstract class VehicleBase
     {
         //TODO may be readonly?
         //TODO unitsize is always 1. At this moment it will be 1 until i extend it.
