@@ -63,5 +63,15 @@ namespace LexiconExercise5
         {
             return exp(_garage);
         }
+
+        internal bool IsRegUnique(string reg)
+        {
+            VehicleBase? vehicle = SearchReg(reg);
+            if (vehicle == null)
+                return true;
+            else
+                return false;
+
+        }
     }
 }

@@ -68,22 +68,6 @@ namespace LexiconExercise5
             GarageMenu();
         }
 
-        //private void CreateAndPark(VehicleType type)
-        //{
-        //    UI.WriteLine(type.ToString());
-        //    UI.ReadLine();
-        //    string reg = GetRegNumber();
-        //    //UI.WriteLine($"Does the bus have a toilet? Enter 0 for no or 1 for yes.");
-        //    int nr = UI.ReadInt("Does the bus have a toilet? Enter 0 for no or 1 for yes.", 1, 0);
-        //    bool res = _handler.ParkVehicle(new Bus(reg, Convert.ToBoolean(nr)));
-        //    if (res == true)
-        //        _lastMessage = "The bus has been parked.";
-        //    else
-        //        _lastMessage = "The bus could NOT be parked.";
-
-        //    ParkVehicleMenu();
-        //}
-
         private void SearchReg()
         {
             UI.WriteLine("Test");
@@ -111,6 +95,7 @@ namespace LexiconExercise5
             throw new NotImplementedException();
         }
 
+        //TODO Registration check. May not be unique.
         private void PopulateRandom()
         {
             int nrOfVehicles = UI.ReadInt("How many vehicles would you like to create and park?:",100,1);
@@ -158,6 +143,7 @@ namespace LexiconExercise5
 
         private void ViewVehicles()
         {
+            GarageInfo();
             //Initiate counters for vehicletypes with 0 to avoid exceptions
             Dictionary<VehicleType, int>  vehicleCounter = Enum.GetValues<VehicleType>()
                 .ToDictionary(key => key, value => 0);
@@ -177,12 +163,14 @@ namespace LexiconExercise5
                 UI.WriteLine($"{vehicles.IndexOf(vehicle) + 1} {vehicle.Details()}");
             }
 
+            UI.WriteLine("");
             //Loop and print out counter for each VehicleType
             Enum.GetValues<VehicleType>()
                 .ToList()
                 .ForEach(type => UI.WriteLine($"Nr {type}s: {vehicleCounter[type]}"));
 
             //This will always return 0. So just for a pause effect.
+            UI.WriteLine("");
             UI.ReadInt("Enter 0 to go back:", 0, 0);
             GarageMenu();
         }
@@ -218,8 +206,20 @@ namespace LexiconExercise5
 
         private string GetRegNumber()
         {
-            UI.WriteLine("Enter Registration number 1-6 characters:");
-            return UI.ReadString("Error, Enter Registration number 1-6 characters:",6,1);
+            do
+            {
+                string reg = UI.ReadString("Enter Registration number 1-6 characters:", 6, 1);
+                //Check that it is unique.
+                if (_handler.IsRegUnique(reg))
+                {
+                    return reg;
+                }
+                else
+                {
+                    UI.WriteLine($"Error, There is already a vehicle with reg={reg}");
+                    continue;
+                }
+            } while(true);
         }
 
         private void ParkVehicleMenu()
