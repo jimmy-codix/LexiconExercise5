@@ -1,4 +1,6 @@
-﻿namespace LexiconExercise5.Vehicles
+﻿using LexiconExercise5.Interfaces;
+
+namespace LexiconExercise5.Vehicles
 {
     //TODO move this out
     enum VehicleType
@@ -9,7 +11,7 @@
         Car,
         Motorcycle
     }
-    public abstract class VehicleBase
+    public abstract class VehicleBase : IVehicleBase
     {
         //TODO may be readonly?
         //TODO unitsize is always 1. At this moment it will be 1 until i extend it.
