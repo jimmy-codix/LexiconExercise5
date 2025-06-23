@@ -6,7 +6,7 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace LexiconExercise5
 {
-    internal class Garage<T> : IGarage<T>, IEnumerable<T> where T : VehicleBase
+    public class Garage<T> : IGarage<T>, IEnumerable<T> where T : VehicleBase
     {
         private readonly T[] _items;
         private int currIndex = 0;
@@ -31,6 +31,8 @@ namespace LexiconExercise5
 
         public Garage(int size)
         {
+            if (size < 0)
+                throw new IndexOutOfRangeException();
             _items = new T[size];
             Capacity = size;
             FreeCapacity = size;
@@ -50,13 +52,6 @@ namespace LexiconExercise5
         {
             return GetEnumerator();
         }
-
-        /*
-        public void Departing(Vehicle vehicle)
-        {
-            ArgumentNullException.ThrowIfNull(vehicle, nameof(vehicle));
-        }
-        */
 
         //TODO: Better validating
         public bool Park(T item)
@@ -79,15 +74,17 @@ namespace LexiconExercise5
 
         private bool CanVehicleFit(T vehicle) => vehicle.UnitSize <= FreeCapacity;
 
-        public T? Depart(T vehicle)
+        public T? Depart(T item)
         {
+            ArgumentNullException.ThrowIfNull(item, nameof(item));
+
             for (int i = 0; i < _items.Length; i++)
             {
-                if (_items[i] == vehicle)
+                if (_items[i] == item)
                 {
                     _items[i] = null!;
                     FreeCapacity++;
-                    return vehicle;
+                    return item;
                 }
             }
 
